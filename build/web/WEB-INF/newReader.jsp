@@ -12,12 +12,14 @@
         <title>Новый читатель</title>
     </head>
     <body>
-        <h1>Создать читателя</h1>
+        <h1>Регистрация</h1>
         <form action="addReader" method="POST">
+            Login: <input type="text" name="login"><br>
+            Password: <input type="password" name="password"><br>
             Имя: <input type="text" name="name"><br>
             фамилия: <input type="text" name="lastname"><br>
             Эмаил: <input type="text" name="email"><br>
-            <input type="submit" value="Создать читателя"><br>
+            <input type="submit" value="Создать пользователя"><br>
         </form>
     </body>
 </html>
