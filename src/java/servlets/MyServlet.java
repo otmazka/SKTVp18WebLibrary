@@ -24,6 +24,7 @@ import session.BookFacade;
 import session.HistoryFacade;
 import session.ReaderFacade;
 import session.UserFacade;
+import utils.EncryptPass;
 
 /**
  *
@@ -108,7 +109,10 @@ public class MyServlet extends HttpServlet {
                 try {
                 reader = new Reader(name, lastname, email);
                 readerFacade.create(reader);
-                user = new User(login, password, "", reader);
+                EncryptPass encryptPass = new EncryptPass();
+                String salts = encryptPass.getSalts();
+                password = encryptPass.getEncryptPass(password, salts);
+                user = new User(login, password, salts, reader);
                 userFacade.create(user);
                 } catch (Exception e) {
                     if(reader!=null){
@@ -154,6 +158,9 @@ public class MyServlet extends HttpServlet {
                         .forward(request, response);
                 break;
                 }
+                EncryptPass encryptPass = new EncryptPass();
+                
+                password = encryptPass.getEncryptPass(password, user.getSalts());
                 if(!password.equals(user.getPassword())){
                 request.setAttribute("info", "Неправильный логин или пароль!");   
                 request.getRequestDispatcher("/WEB-INF/showLogin.jsp")
